@@ -6,6 +6,7 @@ class push2db {
 
     protected $database_regex;
     protected $databases = [];
+    protected $databases_skipped = [];
     protected $host;
     protected $password;
     protected $sql;
@@ -61,9 +62,11 @@ class push2db {
         $pdo = $this->connect();
         $this->findDatabases($pdo);
         
-        if (count($this->databases) > 0) {
+        $databases = array_diff($this->databases, $this->databases_skipped);
+
+        if (count($databases) > 0) {
             
-            foreach ($this->databases AS $db) {
+            foreach ($databases AS $db) {
 
                 $pdo->exec("USE `$db`;");
                 
@@ -115,6 +118,21 @@ class push2db {
     public function setDatabaseRegex($regex) 
     { 
         $this->database_regex = $regex;
+    }
+    
+    /**
+     * Skip databases from the list
+     *
+     * @param string $database
+     * @return null
+     */
+    public function skipDatabase($database) 
+    { 
+        if (preg_match('/^[0-9a-zA-Z\_]{1,64}$/', $database) > 0) {
+                $this->databases_skipped[] = $database;
+        } else {
+            die(sprintf("%s() - Invalid database name: `%s`".PHP_EOL, __METHOD__, $database));
+        }
     }
     
 }

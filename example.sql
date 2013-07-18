@@ -1,1 +1,0 @@
-ALTER TABLE `website` ADD `website_is_active` TINYINT(1) NULL DEFAULT NULL;
