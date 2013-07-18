@@ -35,3 +35,7 @@ A tool written in PHP to automate the execution of queries across multiple MySQL
     
     // and away we go
     $push2db->execute($sql);
+    
+***
+
+###### Tested on PHP 5.4 - Released under the MIT License 
