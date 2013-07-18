@@ -6,7 +6,7 @@ class push2db {
 
     protected $database_regex;
     protected $databases = [];
-    protected $host = 'localhost';
+    protected $host;
     protected $password;
     protected $sql;
     protected $username;
